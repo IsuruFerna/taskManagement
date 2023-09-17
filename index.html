@@ -1,25 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>To-Do App</title>
-  </head>
-  <body>
-    <div id="app" class="container">
-      <h2 class="title">To-Do List</h2>
-      <div class="input-container">
-        <input
-          type="text"
-          id="task"
-          placeholder="Nuova attività"
-          class="task-input"
-        />
-        <button onclick="addTask()" class="btn add-button">Aggiungi</button>
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="style.css" />
+      <title>To-Do App</title>
+   </head>
+   <body>
+      <!-- <div id="app" class="container"> -->
+      <!-- <h2 class="title">To-Do List</h2>
+         <div class="input-container">
+            <input
+               type="text"
+               id="task"
+               placeholder="Nuova attività"
+               class="task-input"
+            />
+            <button onclick="addTask()" class="btn add-button">Aggiungi</button>
+         </div>
+         <ul id="taskList" class="task-list"></ul>
+      </div> -->
+
+      <div id="container-form-task-origin" class="container">
+         <h2>Plan your day</h2>
+         <form id="form-task-origin">
+            <div class="input-container">
+               <label for="tasks-origin"
+                  >Add a list of task with commas to separate</label
+               >
+            </div>
+            <div class="input-container">
+               <textarea id="tasks-origin" rows="10" cols="50">
+Task A, Task B, Task C,...</textarea
+               >
+            </div>
+            <div class="input-container">
+               <button type="submit" class="btn add-button">Aggiungi</button>
+            </div>
+         </form>
       </div>
-      <ul id="taskList" class="task-list"></ul>
-    </div>
-    <script src="script.js"></script>
-  </body>
+
+      <div id="container-manage-date-time" class="container">
+         <h2>Choose date and time</h2>
+         <form id="form-manage-date-time">
+            <!-- this is a place holder to better understand -->
+            <!-- <div class="input-container">
+            <label for="input-0">Task</label>
+            <input id="input-0" type="text" />
+            <label for="input-0-date">Date</label>
+            <input id="input-0-date" type="date" />
+            <label for="input-0-time">Date</label>
+            <input id="input-0-time" type="time" />
+         </div> -->
+            <!-- <div class="input-container">
+               <button type="submit" class="btn add-button">Save</button>
+            </div> -->
+         </form>
+      </div>
+      <script src="script.js"></script>
+   </body>
 </html>
