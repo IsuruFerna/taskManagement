@@ -1,6 +1,12 @@
 let taskCount = 0;
 let completedTasksCount = 0;
 
+// check if there is already a value in local storage
+if (!localStorage.getItem("listTasks")) {
+   // if not, set the the listTasks to a empty list in local storage
+   localStorage.setItem("listTasks", []);
+}
+
 const containerFormTask = document.getElementById("container-form-task-origin");
 const containerTaskManage = document.getElementById(
    "container-manage-date-time"
@@ -68,6 +74,9 @@ formTaskOrigin.addEventListener("submit", function (e) {
          };
          listObjSaveTasks.push(obj);
       }
+
+      // store object list to localStorage
+      localStorage.setItem("listTasks", listObjSaveTasks);
 
       console.log("all the data saved into list of object");
       console.log(listObjSaveTasks);
