@@ -31,13 +31,20 @@ formTaskOrigin.addEventListener("submit", function (e) {
 
       // input fields must be required?
       eachInput.innerHTML = `
-        <label for="input-${index}">Task</label>
-        <input id="input-${index}" type="text" value="${element.trim()}" />
-        <label for="input-${index}-date">Date</label>
-        <input id="input-${index}-date" type="date" />
-        <label for="input-${index}-time">Date</label>
-        <input id="input-${index}-time" type="time" />
-      `;
+                           <div class="input-row">
+                              <label for="input-${index}" class="text-input-label">Task</label>
+                              <input id="input-${index}" type="text" class="input-text" value="${element.trim()}" />
+                           </div>
+                           <div class="input-row">
+                              <label for="input-${index}-date" class="date-input-label">Date</label>
+                              <input id="input-${index}-date" type="date" class="input-date"/>
+                           </div>
+                           <div class="input-row">
+                              <label for="input-${index}-time" class="time-input-label" >Time</label>
+                              <input id="input-${index}-time" type="time" class="input-time" />
+                           </div>
+
+                           `;
       formManageDataTime.appendChild(eachInput);
    });
 
