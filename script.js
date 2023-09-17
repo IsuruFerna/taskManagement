@@ -57,6 +57,7 @@ formTaskOrigin.addEventListener("submit", function (e) {
             task: allInputs[i].value,
             date: allInputs[i + 1].value,
             time: allInputs[i + 2].value,
+            done: false,
          };
          listObjSaveTasks.push(obj);
       }
