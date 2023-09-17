@@ -1,10 +1,13 @@
 let taskCount = 0;
 let completedTasksCount = 0;
 
+// uncomment this localStorage line to clean the localStorage
+// localStorage.setItem("listTasks", JSON.stringify([]));
+
 // check if there is already a value in local storage
 if (!localStorage.getItem("listTasks")) {
    // if not, set the the listTasks to a empty list in local storage
-   localStorage.setItem("listTasks", []);
+   localStorage.setItem("listTasks", JSON.stringify([]));
 }
 
 const containerFormTask = document.getElementById("container-form-task-origin");
@@ -16,7 +19,10 @@ const formManageDataTime = document.getElementById("form-manage-date-time");
 const formTaskOrigin = document.getElementById("form-task-origin");
 const taskOrigin = document.getElementById("tasks-origin");
 let listTasks = [];
-const listObjSaveTasks = [];
+// const listObjSaveTasks = [];
+let listObjSaveTasks = JSON.parse(localStorage.getItem("listTasks"));
+
+console.log("here's saved before: ", listObjSaveTasks);
 
 const manageTasks = document.getElementById("container-manage-date-time");
 
@@ -76,7 +82,7 @@ formTaskOrigin.addEventListener("submit", function (e) {
       }
 
       // store object list to localStorage
-      localStorage.setItem("listTasks", listObjSaveTasks);
+      localStorage.setItem("listTasks", JSON.stringify(listObjSaveTasks));
 
       console.log("all the data saved into list of object");
       console.log(listObjSaveTasks);
