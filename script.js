@@ -4,11 +4,13 @@ let completedTasksCount = 0;
 // uncomment this localStorage line to clean the localStorage
 // localStorage.setItem("listTasks", JSON.stringify([]));
 
-// check if there is already a value in local storage
+// retrieving data from local storage
+// check if there is already a list in local storage
 if (!localStorage.getItem("listTasks")) {
    // if not, set the the listTasks to a empty list in local storage
    localStorage.setItem("listTasks", JSON.stringify([]));
 }
+let listObjSaveTasks = JSON.parse(localStorage.getItem("listTasks"));
 
 const containerFormTask = document.getElementById("container-form-task-origin");
 const containerTaskManage = document.getElementById(
@@ -20,11 +22,30 @@ const formTaskOrigin = document.getElementById("form-task-origin");
 const taskOrigin = document.getElementById("tasks-origin");
 let listTasks = [];
 // const listObjSaveTasks = [];
-let listObjSaveTasks = JSON.parse(localStorage.getItem("listTasks"));
-
-console.log("here's saved before: ", listObjSaveTasks);
 
 const manageTasks = document.getElementById("container-manage-date-time");
+const listedTasks = document.getElementById("container-listed-tasks");
+listedTasks.style.display = "none";
+
+// This is menu
+const navList = document.getElementById("menu");
+navList.addEventListener("click", function (event) {
+   const target = event.target;
+   if (target.classList.contains("menu-item")) {
+      // set visibility based on clicked button
+      if (target.textContent === "Home") {
+         listedTasks.style.display = "block";
+         containerFormTask.style.display = "none";
+      } else if (target.textContent === "Listing") {
+         listedTasks.style.display = "none";
+         containerFormTask.style.display = "block";
+      }
+   }
+});
+
+// ***************************************************************************************************************
+// listed tasks
+// build a functionality to add list of task into container-listed-tasks
 
 formTaskOrigin.addEventListener("submit", function (e) {
    // when user click on btn get the input as a string and separate each with the comma and add into an array
@@ -86,6 +107,7 @@ formTaskOrigin.addEventListener("submit", function (e) {
 
       console.log("all the data saved into list of object");
       console.log(listObjSaveTasks);
+      addTask();
    });
 });
 
@@ -99,22 +121,30 @@ const showRemoveCompletedTasksBtn = function () {
 const removeCompletedTaskBtn = function (
    btn = document.querySelector(".btn.remove-completed")
 ) {
+   console.log("this is the btn: ", btn);
    btn.remove();
 };
 
 function addTask() {
-   const taskInput = document.getElementById("task");
-   const taskText = taskInput.value.trim();
+   // const taskInput = document.getElementById("task");
+   // const taskText = taskInput.value.trim();
 
-   if (taskText !== "" && taskText.length <= 30) {
+   // set visibility of containers
+   containerTaskManage.style.display = "none";
+   listedTasks.style.display = "block";
+
+   // add each created task to list
+   listObjSaveTasks.forEach((element) => {
       const taskList = document.getElementById("taskList");
       const li = document.createElement("li");
       li.classList.add("task");
       li.innerHTML = `
-                      <span class="task-text">${taskText}</span>
-                      <button onclick="removeTask(this)" class="btn removeTaskBtn">Rimuovi</button>
+                      <span class="task-text">${element.task} ${
+         element.date ? " " + element.date : " date"
+      } ${element.time ? " " + element.time : " time"}</span>
+                      <button class="btn removeTaskBtn">Rimuovi</button>
                   `;
-      console.log(completedTasksCount);
+
       li.addEventListener("mouseover", () => {
          li.style.backgroundColor = "#10111a";
       });
@@ -133,15 +163,80 @@ function addTask() {
          }
          //li.style.textDecoration = "line-through";
       });
+      console.log(li);
+
       taskList.appendChild(li);
-      taskInput.value = "";
+      // taskInput.value = "";
       taskCount++;
-   } else {
-      alert(
-         "assicurati che il testo non sia vuoto e non superi i 30 caratteri."
-      );
-   }
+
+      btnRemove();
+   });
+
+   // error handeler
+   // if (taskText !== "" && taskText.length <= 30) {
+   // } else {
+   //    alert(
+   //       "assicurati che il testo non sia vuoto e non superi i 30 caratteri."
+   //    );
+   // }
 }
+
+// implementing remove btn
+const btnRemove = function () {
+   const btnRemoveTask = document.querySelectorAll(".removeTaskBtn");
+
+   for (let i = 0; i < btnRemoveTask.length; i++) {
+      btnRemoveTask[i].addEventListener("click", function () {
+         // remove from the visibility and remove from the data
+         btnRemoveTask[i].parentElement.remove();
+         listObjSaveTasks.splice(i, 1);
+
+         // update/store object list to localStorage
+         localStorage.setItem("listTasks", JSON.stringify(listObjSaveTasks));
+      });
+   }
+};
+
+// function addTask() {
+//    const taskInput = document.getElementById("task");
+//    const taskText = taskInput.value.trim();
+
+//    if (taskText !== "" && taskText.length <= 30) {
+//       const taskList = document.getElementById("taskList");
+//       const li = document.createElement("li");
+//       li.classList.add("task");
+//       li.innerHTML = `
+//                       <span class="task-text">${taskText}</span>
+//                       <button onclick="removeTask(this)" class="btn removeTaskBtn">Rimuovi</button>
+//                   `;
+//       console.log(completedTasksCount);
+//       li.addEventListener("mouseover", () => {
+//          li.style.backgroundColor = "#10111a";
+//       });
+//       li.addEventListener("mouseleave", () => {
+//          li.style.backgroundColor = "#0d0e14";
+//       });
+//       li.addEventListener("click", (event) => {
+//          if (event.target.tagName !== "BUTTON") {
+//             li.firstElementChild.style.textDecoration = "line-through";
+//             li.classList.add("completed");
+//             completedTasksCount++;
+//             if (completedTasksCount === 1) {
+//                showRemoveCompletedTasksBtn();
+//             }
+//             console.log(completedTasksCount);
+//          }
+//          //li.style.textDecoration = "line-through";
+//       });
+//       taskList.appendChild(li);
+//       taskInput.value = "";
+//       taskCount++;
+//    } else {
+//       alert(
+//          "assicurati che il testo non sia vuoto e non superi i 30 caratteri."
+//       );
+//    }
+// }
 
 function removeTask(button) {
    const taskList = document.getElementById("taskList");
